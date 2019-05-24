@@ -32,8 +32,8 @@ proveniente del StudentController, método doGet.
             <td><%= s.getGuardian() %></td>
             <td><%= s.getContactPhone() %></td>
             <td>
-                <a class="btn btn-primary" href="edit?id=<%=s.getCode()%>">Editar</a>
-                <a class="btn btn-primary" href="view?id=<%=s.getCode()%>">Ver</a>
+                <a class="btn btn-primary" href="students/edit?id=<%= s.getCode() %>">Editar</a>
+                <a class="btn btn-primary" href="students/view?id=<%= s.getCode() %>">Ver</a>
             </td>
         </tr>
         <%}%>

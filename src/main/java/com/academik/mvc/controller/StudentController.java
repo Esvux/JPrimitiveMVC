@@ -2,6 +2,7 @@ package com.academik.mvc.controller;
 
 import com.academik.mvc.dao.StudentDAO;
 import com.academik.mvc.model.Student;
+import com.academik.mvc.utils.TimeUtils;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -36,12 +37,15 @@ public class StudentController extends HttpServlet {
                 break;
             case "/view":
                 //Obtengo el parametro desde la URL
-                long id = Long.parseLong(req.getParameter("id"));
-                Student sToView = dao.findById(id);
+                long idToView = Long.parseLong(req.getParameter("id"));
+                Student sToView = dao.findById(idToView);
                 req.setAttribute("single_student", sToView);
                 redirectPage = "student-view.jsp";
                 break;
             case "/edit":
+                long idToEdit = Long.parseLong(req.getParameter("id"));
+                Student sToEdit = dao.findById(idToEdit);
+                req.setAttribute("single_student", sToEdit);
                 redirectPage = "student-edit.jsp";
                 break;
             case "/list":
@@ -69,7 +73,22 @@ public class StudentController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Creating a new student");
+        //Variable vacia
+        Student noob = new Student();
         
+        //Valores para las propiedades que vienen desde el formulario HTML
+        noob.setFirstName(req.getParameter("s_firstname"));
+        noob.setLastName(req.getParameter("s_lastname"));
+        noob.setGender(req.getParameter("s_gender"));
+        noob.setEmail(req.getParameter("s_email"));
+        noob.setContactPhone(req.getParameter("s_contactphone"));
+        noob.setGuardian(req.getParameter("s_guardian"));
+        noob.setBirthday(TimeUtils.getFromDDMMYYYY(req.getParameter("s_birthday")));
+        
+        //Utilizar el DAO para guardar la informacion en la base de datos
+        dao.create(noob);
+        resp.sendRedirect(req.getContextPath() + "/students");
     }
 
     /**

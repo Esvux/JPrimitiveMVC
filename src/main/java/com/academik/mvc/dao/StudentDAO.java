@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,8 @@ import java.util.List;
 public class StudentDAO implements GeneralDAO<Student> {
 
     /**
-     * Método que se encarga de traer los objetos Student desde la base de
-     * datos.
+     * Método que se encarga de traer los objetos Student 
+     * desde la base de datos.
      *
      * @return
      */
@@ -81,8 +82,25 @@ public class StudentDAO implements GeneralDAO<Student> {
     }
 
     @Override
-    public void create(Student element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void create(Student noob) {
+        try {
+            Connection conn = CONN_WRAPPER.getConnection();
+            PreparedStatement stmnt = conn.prepareCall(
+                "INSERT INTO student"
+              + " (first_name, last_name, gender, email, contact_phone, guardian, birthday)"
+              + " VALUES (?, ?, ?, ?, ?, ?, ?)"
+            );
+            stmnt.setString(1, noob.getFirstName());
+            stmnt.setString(2, noob.getLastName());
+            stmnt.setString(3, noob.getGender());
+            stmnt.setString(4, noob.getEmail());
+            stmnt.setString(5, noob.getContactPhone());
+            stmnt.setString(6, noob.getGuardian());
+            stmnt.setTimestamp(7, Timestamp.from(noob.getBirthday().toInstant()));
+            stmnt.execute();
+        } catch(ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

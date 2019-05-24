@@ -33,8 +33,8 @@
             <input class="form-control" type="text" name="s_guardian"/>
         </div>
         <div class="form-group">
-            <label for="s_contactPhone">Teléfono de contacto</label>
-            <input class="form-control" type="text" name="s_contactPhone"/>
+            <label for="s_contactphone">Teléfono de contacto</label>
+            <input class="form-control" type="text" name="s_contactphone"/>
         </div>
         <input class="btn btn-primary" type="submit" value="Crear"/>
     </form>
