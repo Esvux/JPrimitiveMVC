@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.academik.mvc.utils;
 
 import java.text.ParseException;
@@ -16,6 +11,8 @@ import java.util.Date;
 public class TimeUtils {
     
     public static Date getFromDDMMYYYY(String dateAsString) {
+        if(dateAsString == null)
+            return null;
         SimpleDateFormat formatterWithForwardSlash = new SimpleDateFormat("dd/MM/YYYY");
         try {
             return formatterWithForwardSlash.parse(dateAsString);
@@ -29,6 +26,13 @@ public class TimeUtils {
             ex.printStackTrace();
         }
         return null;
+    }
+    
+    public static String parseToDDMMYYYY(Date date) {
+        if(date == null)
+            return null;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY");
+        return formatter.format(date);
     }
     
 }
