@@ -85,7 +85,7 @@ public class StudentDAO implements GeneralDAO<Student> {
     public void create(Student noob) {
         try {
             Connection conn = CONN_WRAPPER.getConnection();
-            PreparedStatement stmnt = conn.prepareCall(
+            PreparedStatement stmnt = conn.prepareStatement(
                 "INSERT INTO student"
               + " (first_name, last_name, gender, email, contact_phone, guardian, birthday)"
               + " VALUES (?, ?, ?, ?, ?, ?, ?)"
@@ -104,8 +104,32 @@ public class StudentDAO implements GeneralDAO<Student> {
     }
 
     @Override
-    public void edit(long id, Student element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void edit(long id, Student edited) {
+        try {
+            Connection conn = CONN_WRAPPER.getConnection();
+            PreparedStatement stmnt = conn.prepareStatement(
+                "UPDATE student SET "
+              + " first_name = ?,"
+              + " last_name = ?,"
+              + " gender = ?,"
+              + " email = ?,"
+              + " contact_phone = ?,"
+              + " guardian = ?,"
+              + " birthday = ?"
+              + " WHERE code = ?"
+            );
+            stmnt.setString(1, edited.getFirstName());
+            stmnt.setString(2, edited.getLastName());
+            stmnt.setString(3, edited.getGender());
+            stmnt.setString(4, edited.getEmail());
+            stmnt.setString(5, edited.getContactPhone());
+            stmnt.setString(6, edited.getGuardian());
+            stmnt.setTimestamp(7, Timestamp.from(edited.getBirthday().toInstant()));
+            stmnt.setLong(8, id);
+            stmnt.execute();
+        } catch(ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

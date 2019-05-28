@@ -72,7 +72,17 @@ public class StudentController extends HttpServlet {
      * Para recibir la petición de crear un nuevo estudiante.
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        if("PUT".equals(req.getParameter("_method"))){
+            doPut(req, resp);
+            return;
+        }
+        if("DELETE".equals(req.getParameter("_method"))){
+            doDelete(req, resp);
+            return;
+        }
+            
         System.out.println("Creating a new student");
         //Variable vacia
         Student noob = new Student();
@@ -96,7 +106,22 @@ public class StudentController extends HttpServlet {
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Editing an student...");
+        //Variable vacia
+        Student edited = new Student();
         
+        //Valores NUEVOS para las propiedades que vienen desde el formulario HTML
+        edited.setFirstName(req.getParameter("s_firstname"));
+        edited.setLastName(req.getParameter("s_lastname"));
+        edited.setGender(req.getParameter("s_gender"));
+        edited.setEmail(req.getParameter("s_email"));
+        edited.setContactPhone(req.getParameter("s_contactphone"));
+        edited.setGuardian(req.getParameter("s_guardian"));
+        edited.setBirthday(TimeUtils.getFromDDMMYYYY(req.getParameter("s_birthday")));
+        
+        //Utilizar el DAO para guardar la informacion en la base de datos
+        dao.edit(Integer.parseInt(req.getParameter("code")), edited);
+        resp.sendRedirect(req.getContextPath() + "/students");
     }
 
     /**

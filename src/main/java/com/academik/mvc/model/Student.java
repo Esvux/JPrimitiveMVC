@@ -1,5 +1,6 @@
 package com.academik.mvc.model;
 
+import com.academik.mvc.utils.TimeUtils;
 import java.util.Date;
 
 /**
@@ -75,6 +76,10 @@ public class Student {
 
     public Date getBirthday() {
         return birthday;
+    }
+    
+    public String getBirthdayAsString() {
+        return TimeUtils.parseToDDMMYYYY(birthday);
     }
 
     public void setBirthday(Date birthday) {

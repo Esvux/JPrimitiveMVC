@@ -1,3 +1,4 @@
+<%@page import="com.academik.mvc.utils.TimeUtils" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean 
     id="single_student" 
@@ -9,6 +10,8 @@
 
 <h1>Editar estudiante</h1>
 <form method="POST">
+    <input type="hidden" name="_method" value="PUT"/>
+    <input type="hidden" name="code" value="${single_student.code}"/>
     <div class="form-group">
         <label for="s_firstname">Nombres</label>
         <input class="form-control" type="text" name="s_firstname" value="${single_student.firstName}"/>
@@ -30,7 +33,7 @@
     </div>
     <div class="form-group">
         <label for="s_birthday">Fecha de nacimiento</label>
-        <input class="form-control" type="text" name="s_birthday" value="${single_student.birthday}"/>
+        <input class="form-control" type="text" name="s_birthday" value="${single_student.birthdayAsString}"/>
     </div>
     <div class="form-group">
         <label for="s_guardian">Encargado (a)</label>
@@ -38,7 +41,7 @@
     </div>
     <div class="form-group">
         <label for="s_contactPhone">Teléfono de contacto</label>
-        <input class="form-control" type="text" name="s_contactPhone" value="${single_student.contactPhone}"/>
+        <input class="form-control" type="text" name="s_contactphone" value="${single_student.contactPhone}"/>
     </div>
     <input class="btn btn-primary" type="submit" value="Guardar"/>
 </form>
