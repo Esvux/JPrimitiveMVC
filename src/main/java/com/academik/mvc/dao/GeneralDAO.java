@@ -24,4 +24,6 @@ public interface GeneralDAO<T> {
     
     void edit(long id, T element);
     
+    void delete(long id);
+    
 }

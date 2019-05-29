@@ -129,7 +129,10 @@ public class StudentController extends HttpServlet {
      */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+        System.err.println("Deleting student...");
+        long id = Long.parseLong(req.getParameter("code"));
+        dao.delete(id);
+        resp.sendRedirect(req.getContextPath() + "/students");
     }
     
 }

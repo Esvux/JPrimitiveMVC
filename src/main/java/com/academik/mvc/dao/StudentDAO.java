@@ -132,4 +132,19 @@ public class StudentDAO implements GeneralDAO<Student> {
         }
     }
 
+    @Override
+    public void delete(long id) {
+        try {
+            Connection conn = CONN_WRAPPER.getConnection();
+            
+            PreparedStatement stmnt = conn.prepareStatement(
+                    "DELETE FROM student WHERE code = ?"
+            );
+            stmnt.setLong(1, id);
+            stmnt.executeUpdate();
+        } catch(ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
